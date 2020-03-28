@@ -42,7 +42,7 @@ def get_img_dict(img_info, class_list,feature):
 ################################################################################
 #create folder with names contained in list
 
-def create_folders(class_list, folder):
+def create_class_folders(class_list, folder):
     for cl in class_list:
         try:
             os.mkdir(folder+'/'+cl)

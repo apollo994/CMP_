@@ -29,7 +29,9 @@ def main():
 
     name_to_class = get_img_dict(img_info, class_list, args.ft)
 
-    create_folders(class_list, args.fold)
+    #create_set_folder(set=['train','test','val'], size=[0.8,0.1,0.1])
+
+    create_class_folders(class_list, args.fold)
 
     link_images(args.img, name_to_class, args.fold)
 
