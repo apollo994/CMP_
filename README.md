@@ -1,5 +1,7 @@
 # CMP_images
 
+If you don't have jupyter installed have a look [here](https://github.com/apollo994/CMP_images/blob/master/images_exploratory_analysis.ipynb)
+
 To try the notebook:
 
 ```
@@ -9,6 +11,3 @@ jupyter notebook
 ```
 
 Then run `images_exploratory_analysis.ipynb`
-
-
-If you don't have jupyter installed have a look [here](https://github.com/apollo994/CMP_images/blob/master/images_exploratory_analysis.ipynb)
