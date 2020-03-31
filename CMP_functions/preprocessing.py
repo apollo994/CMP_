@@ -186,8 +186,8 @@ def link_images(img_path, name_to_class, target_folder):
 
 def get_overview(feature, class_count):
 
-    print (f'Number of images: {sum(class_count.values())}')
-    print (f'Images are subdividen in {len(class_count)} {feature}')
+    #print (f'Number of images: {sum(class_count.values())}')
+    print (f'{sum(class_count.values())} images are subdividen in {len(class_count)} {feature}')
     print ()
     for f in class_count:
         print (f'{f}: {class_count[f]}')
