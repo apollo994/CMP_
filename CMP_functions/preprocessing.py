@@ -18,14 +18,15 @@ from random import sample
 ##################################################################################
 #List file in directory
 
-def list_files(path):
+def get_files(path):
 
     names = []
 
     for root, dirs, files in os.walk(path):
         for filename in files:
-            names.append(filename.split('.')[0])
-            print(filename)
+            name = filename.split('.')[0]
+            if len(name)>0:
+                names.append(name)
     return names
 
 ##################################################################################
@@ -77,7 +78,7 @@ def check_consistency(im_names, im_info):
 
     to_keep = list(set(to_keep))
 
-    print (f'Found {len(to_keep)} consistent file and info out of {n_images_file} images and {n_images_info} info')
+    print (f'Found {len(to_keep)} images-info matches out of {n_images_file} images and {n_images_info} info')
     print (f'{len(missing_file)} missing file found')
     print (f'{len(missing_info)} missing info found')
 
