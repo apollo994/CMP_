@@ -228,8 +228,9 @@ def print_classes(class_list):
 #n is the number of images printed (randomly choosen)
 #if want all n='a'
 
-def view_img(path,feature, cl, im_info, n='a'):
-    list_of_images = glob.glob(path+feature+'/'+cl+'/*.jpg')
+
+def view_image(cl, feature, im_info, n, path_jpg):
+    list_of_images = list(im_info[im_info[feature].isin([cl])]['im_id'])
 
     if n=='a':
         n = len(list_of_images)
@@ -240,7 +241,8 @@ def view_img(path,feature, cl, im_info, n='a'):
     selected = sample(list_of_images, n)
 
     for im in selected:
-        pil_img = pymage(filename=im)
+        file = path_jpg+im+'.jpg'
+        pil_img = pymage(filename=file)
         img_name = im.split('/')[-1]
         img_name = img_name.split('.')[0]
         info = im_info[im_info['im_id']==img_name]
