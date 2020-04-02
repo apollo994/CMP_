@@ -4,3 +4,4 @@ data
 images
 __pycache__/
 plots
+cell_profiler
