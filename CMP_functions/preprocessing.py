@@ -163,6 +163,20 @@ def create_class_folders(class_list, feature, data_dir):
             print (f'Sub-directory {cl} already exists')
         else:
             print (f'Successfully created the sub-directory {cl}')
+            
+################################################################################
+#Second version of create folders which do not create a 'features' folder
+  
+
+def create_class_folders2(class_list, data_dir):
+
+    for cl in class_list:
+        try:
+            os.mkdir(data_dir+'/'+cl)
+        except OSError:
+            print (f'Sub-directory {cl} already exists')
+        else:
+            print (f'Successfully created the sub-directory {cl}')
 
 ################################################################################
 #image link in calss folder depending on img name
@@ -260,3 +274,23 @@ def view_image(cl, feature, im_info, n, path_jpg):
         print(f'https://cellmodelpassports.sanger.ac.uk/passports/{SIDM}')
 
         display(pil_img)
+
+
+################################################################################
+#Generates a bar plot of the size distribution of a given feature from data
+
+def plot_ft_many(data, ft):
+    fig_dims = (12, 8)
+
+    fig, ax = plt.subplots(figsize=fig_dims)
+
+    chart = sns.countplot(x=ft,
+                          data=data,
+                          palette="deep",
+                          dodge=True,
+                          order = data[ft].value_counts().index)
+
+    labels = chart.set_xticklabels(chart.get_xticklabels(), rotation=45, horizontalalignment='right')
+    ax.set_title(f'Number of images per {ft}')
+
+
