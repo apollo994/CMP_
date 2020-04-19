@@ -32,7 +32,7 @@ echo
 echo --------------------------------------------------------------------------
 echo Increasing sample size...
 
-python3 increase_size.py --exp $exp_name 
+python3 increase_size.py --exp $exp_name
 
 echo DONE!
 echo
@@ -41,7 +41,7 @@ echo
 echo --------------------------------------------------------------------------
 echo Computig the model...
 
-python3 compute_model.py
+python3 compute_model.py --exp $exp_name 
 
 echo DONE!
 echo
