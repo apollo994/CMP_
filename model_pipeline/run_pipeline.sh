@@ -41,15 +41,17 @@ echo
 echo --------------------------------------------------------------------------
 echo Computig the model...
 
+python3 compute_model.py
+
 echo DONE!
 echo
 
 ################################################################################
-# echo --------------------------------------------------------------------------
-# echo Cleaning $exp_name intermediate files...
-#
-# rm -rf $exp_name/train
-# rm -rf $exp_name/validation
-#
-# echo DONE!
-# echo
+echo --------------------------------------------------------------------------
+echo Cleaning $exp_name intermediate files...
+
+rm -rf $exp_name/train
+rm -rf $exp_name/validation
+
+echo DONE!
+echo

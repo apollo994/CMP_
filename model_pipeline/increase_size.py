@@ -41,12 +41,6 @@ def increase_sample(target_folder, target_size, datagen):
         print (f'{n_to_add} new images added to {dir}')
 
 
-
-
-
-
-
-
 def main():
     parser = argparse.ArgumentParser(description='My nice tool.')
     parser.add_argument('--train', default= 1000 , type=int, help='target size for training')
@@ -63,16 +57,6 @@ def main():
             zoom_range=0.2,
             horizontal_flip=True,
             fill_mode='reflect')
-
-    # im = Image.open('../data/images_jpeg/3.jpg')
-    # im= im.resize((150, 150), Image.ANTIALIAS)
-    # x = img_to_array(im)
-    # x = x.reshape((1,) + x.shape)
-    # i = 0
-    # for batch in datagen.flow(x, batch_size=1, save_to_dir='.', save_prefix='aug', save_format='jpeg'):
-    #     i += 1
-    #     if i > 1:
-    #         break
 
     increase_sample(args.exp+'/train/', args.train, datagen)
     increase_sample(args.exp+'/validation/', args.valid, datagen)
