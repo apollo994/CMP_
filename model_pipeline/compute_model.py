@@ -116,7 +116,7 @@ def main():
     model.fit_generator(
         train_generator,
         steps_per_epoch= train_size // batch_size,
-        epochs=3,
+        epochs=50,
         validation_data=validation_generator,
         validation_steps= validation_size // batch_size)
 
