@@ -108,18 +108,33 @@ def main():
             _ = ax1.plot(fpr_th, tpr_th, label=f'fold_{f} = {AUC_ROC}', alpha=0.3)
             _ = ax2.plot(recall_th, precision_th, label=f'fold_{f} = {PR_AUC}', alpha=0.3)
 
+    # mean_fpr = get_mean(mean_fpr)
+    # mean_tpr = get_mean(mean_tpr)
+    # mean_precision_th = get_mean(mean_precision_th)
+    # mean_recall_th = get_mean(mean_recall_th)
+    #
+    # mean_AUC_ROC = round(auc(mean_fpr, mean_tpr),3)
+    # mean_PR_AUC = round(auc(mean_recall_th, mean_precision_th),3)
+    #
+    # _ = ax1.plot(mean_fpr, mean_tpr, label=f'mean = {mean_AUC_ROC}', linewidth=3)
+    # _ = ax2.plot(mean_recall_th, mean_precision_th, label=f'mean = {mean_PR_AUC}', linewidth=3)
 
+    all_real = []
+    all_pred = []
 
-    mean_fpr = get_mean(mean_fpr)
-    mean_tpr = get_mean(mean_tpr)
-    mean_precision_th = get_mean(mean_precision_th)
-    mean_recall_th = get_mean(mean_recall_th)
+    for re,pre in zip(reals, preds_p):
+        all_real = all_real+list(re)
+        all_pred = all_pred+list(pre)
 
-    mean_AUC_ROC = round(auc(mean_fpr, mean_tpr),3)
-    mean_PR_AUC = round(auc(mean_recall_th, mean_precision_th),3)
+    all_fpr_th, all_tpr_th, _ = roc_curve(all_real, all_pred)
+    all_AUC_ROC = round(auc(all_fpr_th, all_tpr_th),3)
 
-    _ = ax1.plot(mean_fpr, mean_tpr, label=f'mean = {mean_AUC_ROC}')
-    _ = ax2.plot(mean_recall_th, mean_precision_th, label=f'mean = {mean_PR_AUC}')
+    all_precision_th, all_recall_th, _ = precision_recall_curve(all_real, all_pred)
+    all_PR_AUC = round(auc(all_recall_th, all_precision_th),3)
+
+    _ = ax1.plot(all_fpr_th, all_tpr_th, label=f'all = {all_AUC_ROC}', linewidth=3)
+    _ = ax2.plot(all_recall_th, all_precision_th, label=f'all = {all_PR_AUC}', linewidth=3)
+
 
 
 
