@@ -292,5 +292,21 @@ def plot_ft_many(data, ft):
 
     labels = chart.set_xticklabels(chart.get_xticklabels(), rotation=45, horizontalalignment='right')
     ax.set_title(f'Number of images per {ft}')
+    
+##################################################################################
+#Get master id from img name
+
+def get_master(filename):
+    if ' (' in filename:
+        master = filename.split(' ')[0]
+        return master
+    
+    if '-' in filename:
+        master = filename.split('-')[0]
+        return master
+    else:
+        master = filename
+    
+    return master
 
 
