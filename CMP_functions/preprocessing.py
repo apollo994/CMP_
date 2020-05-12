@@ -279,7 +279,7 @@ def view_image(cl, feature, im_info, n, path_jpg):
 ################################################################################
 #Generates a bar plot of the size distribution of a given feature from data
 
-def plot_ft_many(data, ft):
+def plot_ft_many(data, ft, name=''):
     fig_dims = (12, 8)
 
     fig, ax = plt.subplots(figsize=fig_dims)
@@ -292,6 +292,9 @@ def plot_ft_many(data, ft):
 
     labels = chart.set_xticklabels(chart.get_xticklabels(), rotation=45, horizontalalignment='right')
     ax.set_title(f'Number of images per {ft}')
+    
+    if name!='':
+        fig.savefig(f'{name}.png')
     
 ##################################################################################
 #Get master id from img name
