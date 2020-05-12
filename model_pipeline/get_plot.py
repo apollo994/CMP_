@@ -16,19 +16,22 @@ from sklearn.metrics import roc_curve
 from sklearn.metrics import precision_recall_curve, f1_score, auc
 
 
-def get_mean(l):
-    arrays = [np.array(x) for x in l]
-    res = [np.mean(k) for k in zip(*arrays)]
-
-    return res
+# def get_mean(l):
+#     arrays = [np.array(x) for x in l]
+#     res = [np.mean(k) for k in zip(*arrays)]
+#
+#     return res
 
 
 def main():
     parser = argparse.ArgumentParser(description='My nice tool.')
     parser.add_argument('--exp', metavar='EXP', help='name of the experiment')
+    parser.add_argument('--pos', metavar='POS', type=int, default=1 , help='positive label')
 
 
     args = parser.parse_args()
+
+
 
 
     ############################################################################
@@ -44,11 +47,17 @@ def main():
     with open(f'{args.exp}/results/{args.exp}_pred_c.pk', 'rb') as pred_c_pi:
                 preds_c = pickle.load(pred_c_pi)
 
+
+
+
+    # print (reals[0])
+    # print (preds_p[0])
+
     #NO SKILLS PREDICTOR
     ns_probs = [0 for _ in range(len(reals[0]))]
     ns_auc = roc_auc_score(reals[0], ns_probs)
     ns_fpr, ns_tpr, _ = roc_curve(reals[0], ns_probs)
-    no_skill_ratio = len(reals[0][reals[0]==1]) / len(reals[0])
+    no_skill_ratio = len(reals[0][reals[0]==args.pos]) / len(reals[0])
 
 
 
@@ -93,15 +102,15 @@ def main():
             precision = precision_score(r, p_c)
             recall = recall_score(r, p_c)
 
-            fpr_th, tpr_th, _ = roc_curve(r, p_p)
+            fpr_th, tpr_th, _ = roc_curve(r, p_p, pos_label=args.pos)
             AUC_ROC = round(auc(fpr_th, tpr_th),3)
-            mean_fpr.append(list(fpr_th))
-            mean_tpr.append(list(tpr_th))
+            # mean_fpr.append(list(fpr_th))
+            # mean_tpr.append(list(tpr_th))
 
-            precision_th, recall_th, _ = precision_recall_curve(r, p_p)
+            precision_th, recall_th, _ = precision_recall_curve(r, p_p, pos_label=args.pos)
             PR_AUC = round(auc(recall_th, precision_th),3)
-            mean_precision_th.append(list(precision_th))
-            mean_recall_th.append(list(recall_th))
+            # mean_precision_th.append(list(precision_th))
+            # mean_recall_th.append(list(recall_th))
 
             metrics.write(f'fold_{f},{precision},{recall},{AUC_ROC},{PR_AUC}\n')
 
@@ -121,23 +130,30 @@ def main():
 
     all_real = []
     all_pred = []
+    all_labe = []
 
     for re,pre in zip(reals, preds_p):
         all_real = all_real+list(re)
         all_pred = all_pred+list(pre)
 
-    all_fpr_th, all_tpr_th, _ = roc_curve(all_real, all_pred)
+    for lab in preds_c:
+        all_labe = all_labe+list(lab)
+
+    precision = precision_score(all_real, all_labe)
+    recall = recall_score(all_real, all_labe)
+
+    all_fpr_th, all_tpr_th, _ = roc_curve(all_real, all_pred, pos_label=args.pos)
     all_AUC_ROC = round(auc(all_fpr_th, all_tpr_th),3)
 
-    all_precision_th, all_recall_th, _ = precision_recall_curve(all_real, all_pred)
+    all_precision_th, all_recall_th, _ = precision_recall_curve(all_real, all_pred, pos_label=args.pos)
     all_PR_AUC = round(auc(all_recall_th, all_precision_th),3)
 
     _ = ax1.plot(all_fpr_th, all_tpr_th, label=f'all = {all_AUC_ROC}', linewidth=3)
     _ = ax2.plot(all_recall_th, all_precision_th, label=f'all = {all_PR_AUC}', linewidth=3)
 
-
-
-
+    with open(f'{args.exp}/results/{args.exp}_metrics.csv', 'a') as metrics:
+        metrics.write(f'all,{precision},{recall},{all_AUC_ROC},{all_PR_AUC}\n')
+        
 
     _ = ax1.legend()
     _ = ax2.legend()

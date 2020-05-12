@@ -34,7 +34,7 @@ echo
 echo --------------------------------------------------------------------------
 echo Increasing sample size...
 
-python3 increase_fold.py --exp $exp_name
+python3 increase_fold.py --exp $exp_name --v False
 
 echo DONE!
 echo
