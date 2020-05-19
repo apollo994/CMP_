@@ -4,6 +4,7 @@
 img_folder=$1
 data_info=$2
 exp_name=$3
+positive_label=$4
 
 ################################################################################
 
@@ -30,42 +31,42 @@ echo
 
 ################################################################################
 
-echo
-echo --------------------------------------------------------------------------
-echo Increasing sample size...
-
-python3 increase_fold.py --exp $exp_name --v False
-
-echo DONE!
-echo
-
-################################################################################
-
-echo
-echo --------------------------------------------------------------------------
-echo Computing models...
-
-python3 compute_fold.py --exp $exp_name
-
-echo DONE!
-echo
+# echo
+# echo --------------------------------------------------------------------------
+# echo Increasing sample size...
+#
+# python3 increase_fold.py --exp $exp_name
+#
+# echo DONE!
+# echo
 
 ################################################################################
 
-echo
-echo --------------------------------------------------------------------------
-echo Plotting...
+# echo
+# echo --------------------------------------------------------------------------
+# echo Computing models...
+#
+# python3 compute_fold.py --exp $exp_name --info $data_info --pos $positive_label
+#
+# echo DONE!
+# echo
+#
+# ################################################################################
 
-python3 get_plot.py --exp $exp_name
-
-echo DONE!
-echo
-
-################################################################################
-echo --------------------------------------------------------------------------
-echo Cleaning $exp_name intermediate files...
-
-rm -rf $exp_name/fold*
-
-echo DONE!
-echo
+# echo
+# echo --------------------------------------------------------------------------
+# echo Plotting...
+#
+# python3 get_plot.py --exp $exp_name
+#
+# echo DONE!
+# echo
+#
+# ################################################################################
+# echo --------------------------------------------------------------------------
+# echo Cleaning $exp_name intermediate files...
+#
+# rm -rf $exp_name/fold*
+#
+# echo DONE!
+# echo

@@ -26,7 +26,7 @@ from sklearn.metrics import precision_recall_curve, f1_score, auc
 def main():
     parser = argparse.ArgumentParser(description='My nice tool.')
     parser.add_argument('--exp', metavar='EXP', help='name of the experiment')
-    parser.add_argument('--pos', metavar='POS', type=int, default=1 , help='positive label')
+    parser.add_argument('--pos', metavar='POS', type=int, default=1 , help='positive label (0-1)')
 
 
     args = parser.parse_args()
@@ -153,7 +153,7 @@ def main():
 
     with open(f'{args.exp}/results/{args.exp}_metrics.csv', 'a') as metrics:
         metrics.write(f'all,{precision},{recall},{all_AUC_ROC},{all_PR_AUC}\n')
-        
+
 
     _ = ax1.legend()
     _ = ax2.legend()
