@@ -14,6 +14,7 @@ import pandas as pd
 def main():
     parser = argparse.ArgumentParser(description='My nice tool.')
     parser.add_argument('--info', metavar='INFO_TAB', help='table containig img name and feature')
+    parser.add_argument('--name', metavar='NAME', help='name of the sample')
 
     args = parser.parse_args()
 
@@ -22,10 +23,9 @@ def main():
 
     all_ft = set(info.ft)
 
-
-    with open ('tmp_positive_label.txt', 'w') as p_lab:
-        for f in all_ft:
-            if 'Not' not in f:
+    for f in all_ft:
+        if 'Not' not in f:
+            with open (f'tmp_positive_label_{args.name}.txt', 'w') as p_lab:
                 p_lab.write(f)
 
 

@@ -57,7 +57,7 @@ def main():
     ns_probs = [0 for _ in range(len(reals[0]))]
     ns_auc = roc_auc_score(reals[0], ns_probs)
     ns_fpr, ns_tpr, _ = roc_curve(reals[0], ns_probs)
-    no_skill_ratio = len(reals[0][reals[0]==args.pos]) / len(reals[0])
+    no_skill_ratio = round(len(reals[0][reals[0]==args.pos]) / len(reals[0]),2)
 
 
 
@@ -71,14 +71,14 @@ def main():
     _ = ax1.set_title('ROC curve')
     _ = ax1.set_xlabel('False Positive Rate')
     _ = ax1.set_ylabel('True Positive Rate')
-    _ = ax1.plot(ns_fpr, ns_tpr, label = 'No Skill', linestyle='--')
+    _ = ax1.plot(ns_fpr, ns_tpr, label = f'No Skill = 0.5', linestyle='--')
 
 
 
     _ = ax2.set_title('Precision-recall')
     _ = ax2.set_xlabel('Recall')
     _ = ax2.set_ylabel('Precision')
-    _ = ax2.plot([0, 1], [no_skill_ratio, no_skill_ratio], linestyle='--', label='No Skill')
+    _ = ax2.plot([0, 1], [no_skill_ratio, no_skill_ratio], linestyle='--', label= f'No Skill = {no_skill_ratio}')
 
     ############################################################################
 
