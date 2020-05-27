@@ -4,6 +4,8 @@
 sample_folder=$1
 images=$2
 experiment=$3
+agu_folder=$4
+
 
 for tab in $sample_folder/* ; do
 
@@ -15,7 +17,6 @@ for tab in $sample_folder/* ; do
 
     echo $pos_lab
 
-    #echo sh run_fold.sh $images $tab $name'_results' $pos_lab
 
     bsub \
           -R "select[ngpus>0 && mem>4000] rusage[ngpus_physical=1.00,mem=4000] span[gtile=1]" \
@@ -25,7 +26,7 @@ for tab in $sample_folder/* ; do
           -J $name \
           -o $name'.out' \
           -e $name'.err' \
-          "sh run_fold.sh $images $tab $name'_'$experiment $pos_lab"
+          "sh run_integrated_model.sh $images $tab $name'_'$experiment $pos_lab $agu_folder"
 
     rm 'tmp_positive_label_'$name'.txt'
 

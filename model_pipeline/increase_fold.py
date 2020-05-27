@@ -13,6 +13,32 @@ import random
 from keras.preprocessing.image import ImageDataGenerator, array_to_img, img_to_array, load_img
 
 
+def get_target_size(exp, fold, pos, train_target, validation_target):
+
+    train_pos_len = len(glob.glob(f'{exp}/{fold}/train/{pos}/*.jpg'))
+    train_neg_len = len(glob.glob(f'{exp}/{fold}/train/Not_{pos}/*.jpg'))
+
+    train_max_size = max([train_pos_len, train_neg_len])
+
+    if train_target < train_max_size:
+        train_target_updated = train_max_size
+    else:
+        train_target_updated = train_target
+
+
+    validation_pos_len = len(glob.glob(f'{exp}/{fold}/validation/{pos}/*.jpg'))
+    validation_neg_len = len(glob.glob(f'{exp}/{fold}/validation/Not_{pos}/*.jpg'))
+
+    validation_max_size = max([validation_pos_len, validation_neg_len])
+
+    if validation_target < validation_max_size:
+        validation_target_updated = validation_max_size
+    else:
+        validation_target_updated = validation_target
+
+
+    return train_target_updated, validation_target_updated
+
 def increase_sample(target_folder, target_size, datagen):
     dirs = [x[0] for x in os.walk(target_folder)]
     dirs = dirs[1:]
@@ -46,7 +72,8 @@ def main():
     parser.add_argument('--train', default= 1000 , type=int, help='target size for training')
     parser.add_argument('--valid', default= 200 , type=int, help='target size for vaidation')
     parser.add_argument('--exp', metavar='EXP', help='name of the experiment')
-    parser.add_argument('--v', metavar='V', default= False, help='def= False ')
+    parser.add_argument('--v', metavar='V', default= False, help='augment also validation')
+    parser.add_argument('--pos', metavar='POS', help='positive label')
 
     args = parser.parse_args()
 
@@ -63,10 +90,16 @@ def main():
     folds = [f for f in folds if f[0]=='f']
     folds = sorted(folds)
 
+
+
+
     for fold in folds:
-        increase_sample(f'{args.exp}/{fold}/train/', args.train, datagen)
+
+        train_target, validation_target = get_target_size(args.exp, fold, args.pos, args.train, args.valid)
+
+        increase_sample(f'{args.exp}/{fold}/train/', train_target, datagen)
         if args.v:
-            increase_sample(f'{args.exp}/{fold}/validation/', args.valid, datagen)
+            increase_sample(f'{args.exp}/{fold}/validation/', validation_target, datagen)
 
 
 
