@@ -13,13 +13,17 @@ import numpy as np
 
 def link_agumented(im_list, fold, exp, pos, agu):
     for i in im_list:
-        i = i.strip('.jpg')
+        # i = i.strip('.jpg')
 
+        i = i.strip('_flowi.jpg')
+
+        i_normal = i + '.jpg'
         i_out = i + '_outlines.jpg'
         i_over = i + '_overlay.jpg'
-        i_flo = i + '_flowi.jpg'
+        # i_flo = i + '_flowi.jpg'
 
-        images_to_link = [i_out, i_over, i_flo]
+        # images_to_link = [i_out, i_over, i_flo]
+        images_to_link = [i_out, i_over, i_normal]
 
         for im in images_to_link:
             from_path = os.path.abspath(f'{agu}/{im}')
