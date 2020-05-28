@@ -190,8 +190,16 @@ def main():
         ############################################################################
         #saving model
 
-        #model arch and weigths
-        model.save(f'{args.exp}/results/{args.exp}_{fold}_model.h5')
+        # #model arch and weigths
+        # model.save(f'{args.exp}/results/{args.exp}_{fold}_model.h5')
+
+        # serialize model to JSON
+        model_json = model.to_json()
+        with open(f'{args.exp}/results/{args.exp}_{fold}_model.json', "w") as json_file:
+            json_file.write(model_json)
+        # serialize weights to HDF5
+        model.save_weights(f'{args.exp}/results/{args.exp}_{fold}_model.h5')
+        print("Saved model to disk")
 
         ############################################################################
         #training plots
